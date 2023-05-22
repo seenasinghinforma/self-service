@@ -20,25 +20,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Table from 'react-bootstrap/Table';
 import { useState } from 'react';
-const link = "https://9ss5qg1atj.execute-api.eu-west-1.amazonaws.com/smartbuy/csvmaster";
-const res = {
-  meta: {
-    status: "success",
-    message: "20 products uploaded sucessfully." //message from backend
-  },
-  data: {
-    erroredProducts: [
-      {
-        source_product_id: "test product",
-        source_system_code: "IOM",
-        legal_entity_code: "SA02",
-        profit_centre: "xyz",
-        processStatus: "error",
-        reason: "legalEntity"
-      }
-    ]
-  }
-}
+const link = "https://24gm95wv2i.execute-api.eu-west-1.amazonaws.com/oh1135/csvmaster";
+
 
 function App() {
   const [progress, setProgress] = useState(0);
@@ -50,27 +33,36 @@ function App() {
   const [fileStatus, setFileStatus] = useState("File uploading progress...");
   const [env, setEnv] = useState("Select the Environment");
   const [fileuploadingInput, setFileuploadingInput] = useState(true);
-  const [response, setResponse] = useState(res);
+  const [response, setResponse] = useState({});
   // form hit funtion
   async function formSubmit() {
     let e = document.querySelector(".input-field");
     // Content-Type
+    /* 
+    curl --location 'https://9ss5qg1atj.execute-api.eu-west-1.amazonaws.com/smartbuy/csvmaster' \
+    --header 'x-api-key: {{xApiKey}}' \
+    --header 'X-OH2-DEBUGGING: true' \
+    --header 'X-APPSMITH-SIGNATURE: aaa' \
+    --form 'file=@"/C:/Users/Seena.Singh/Downloads/template-reference-file.csv"'
+    */
+    const formData = new FormData();
+    formData.append("file", e.files[0]);
     const config = {
-      headers:{
-        "x-api-key":"hd5ykvbeg2kfv9669w865zhnwqagzobakht0x6ac",
-        "X-OH2-DEBUGGING":true,
-        "X-APPSMITH-SIGNATURE":"aaa"
-      }
+      headers: {
+        "Content-Type": `multipart/form-data;`,
+        "x-api-key": "hd5ykvbeg2kfv9669w865zhnwqagzobakht0x6ac",
+      },
     };
-    await axios.post(link, {
-      file: e.files[0]
-    },config).then((res) => {
+
+    try {
+      // get file upload % multipart transfer
+      const res = await axios.post(link, formData, config);
       console.log(res);
-      setResponse(res);
-    })
-    .catch((err) => {
+      setResponse(res.data);
+    }
+    catch (err) {
       console.log(err);
-    })
+    }
   }
 
   function handleChange() {
@@ -110,9 +102,9 @@ function App() {
       showErrorModel();
     }
     else if (file === "") {
-       setModelError("Please select the file");
+      setModelError("Please select the file");
       showErrorModel();
-      
+
     }
     else {
       setProgress(0);
@@ -135,6 +127,10 @@ function App() {
       }, 10000);
     }
   }
+  function handleEnvError() {
+    setModelError("Reference data upload is not supported in this environment");
+    showErrorModel();
+  }
   // show model
   function showErrorModel() {
     setShowMOdel(true);
@@ -155,7 +151,7 @@ function App() {
         </Modal.Header>
         <Modal.Body>{modelError}</Modal.Body>
         <Modal.Footer>
-          
+
           <Button variant="primary" onClick={hideErrorModel}>
             OK
           </Button>
@@ -208,8 +204,8 @@ function App() {
 
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => setEnv("DEV")}>DEV</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setEnv("UAT")} >UAT</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setEnv("PROD")}>PROD</Dropdown.Item>
+                  <Dropdown.Item onClick={handleEnvError} >UAT</Dropdown.Item>
+                  <Dropdown.Item onClick={handleEnvError}>PROD</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
@@ -268,6 +264,8 @@ function App() {
             }
             {show ?
               <div className='col-md-12'>
+                <div className='d-flex row'>
+
                 <div className='card uploading-progress col-md-5'>
                   <div className='justify-content-center d-flex'>
                     <span >{fileStatus}</span>
@@ -276,18 +274,25 @@ function App() {
                     <ProgressBar striped variant="info" now={progress} className="progress-bar" />
                   </div>
                 </div>
-              
-                <div className='ms-5 col-md-12 mt-2'>
+                <div className='card uploading-progress col-md-5 ms-1'>
+                  <div className='justify-content-center d-flex'>
+                    <span >No. of Product(s) uploaded: <strong>{response.meta.message.match(/\d+/)[0]}</strong></span>
+                  </div>
+                  <div className='mt-2 progress-width'>
+                  </div>
+                </div>
+                </div>
+                <div className='ms-4 col-md-12 mt-2'>
                   {
-                    !inProgressShow && response.data?.erroredProducts.length>0 ?
-                      <Table striped bordered hover>
+                    !inProgressShow && response.errorProducts?.length > 0 ?
+                      <Table striped bordered hover responsive>
                         <thead>
                           <tr>
                             <th>Error Summary</th>
                           </tr>
                           <tr align='centre'>
                             {
-                               Object.keys(response.data.erroredProducts[0]).map((item) => {
+                              Object.keys(response.errorProducts[0]).map((item) => {
                                 return (
                                   <th>{item}</th>
                                 )
@@ -297,7 +302,7 @@ function App() {
                         </thead>
                         <tbody>
                           {
-                            response.data.erroredProducts.map((item) => {
+                            response.errorProducts.map((item) => {
                               return (
                                 <tr>
                                   {
