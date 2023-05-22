@@ -20,7 +20,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Table from 'react-bootstrap/Table';
 import { useState } from 'react';
-const link = "http://9ss5qg1atj.execute-api.eu-west-1.amazonaws.com/smartbuy/csvmaster";
+const link = "https://9ss5qg1atj.execute-api.eu-west-1.amazonaws.com/smartbuy/csvmaster";
 const res = {
   meta: {
     status: "success",
@@ -57,13 +57,12 @@ function App() {
     // Content-Type
     const config = {
       headers:{
-        "x-api-key":"{{xApiKey}}",
+        "x-api-key":"hd5ykvbeg2kfv9669w865zhnwqagzobakht0x6ac",
         "X-OH2-DEBUGGING":true,
         "X-APPSMITH-SIGNATURE":"aaa"
       }
     };
     await axios.post(link, {
-      env: env,
       file: e.files[0]
     },config).then((res) => {
       console.log(res);

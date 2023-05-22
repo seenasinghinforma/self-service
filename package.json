@@ -1,6 +1,7 @@
 {
   "name": "upload-service",
   "version": "0.1.0",
+  "proxy": "https://9ss5qg1atj.execute-api.eu-west-1.amazonaws.com/smartbuy",
   "private": true,
   "homepage": "https://seenasinghinforma.github.io/self-service",
   "dependencies": {
