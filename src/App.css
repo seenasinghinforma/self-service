@@ -2,37 +2,161 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.spacer {
+  margin-top:20px;
+}
+.line-connect{
+  width: 2px;
+  height: 120px;
+  margin-left: 40%;
+  margin-top: 50%;
+  margin-bottom: 50%;
+  background-color: rgb(128, 124, 124);
+}
+.click-Circle-Ok {
+  color: green;
+  scale: 1.3;
+}
+.header-numberer {
+  background-color: black;
+  color: white;
+  width: 2.5%;
+  padding-left: 10px;
+  border-radius: 20%;
+}
+.Horizontal-line {
+  width: 45%;
+  height: 2px;
+  background-color: rgb(128, 124, 124);
+  margin-top: 6px;
+  margin-left: 38px;
+}
+.textibe-line {
+  margin-left: 38px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.dropDown-size {
+size:"xs";
+width: 20%;
+}
+.select-line {
+  margin-left: 38px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  justify-content: center;
+}
+.second-element {
+  margin-top: 100px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.drop-down-env-seletor {
+  margin-left: 40px;
+  margin-top: 10px;
+}
+.third-element {
+  margin-top: 85px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.upload-btn-wrapper {
+  margin-left: 40px;
+  height: 150px;
+  margin-top: 20px;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+.center-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.upload-icon {
+  scale: 1.6;
+}
+.info-icon {
+  background-color: black;
   color: white;
+  margin-top: 8px;
+  border-radius: 50%;
+  padding : 3px 7px 3px 7px;
+  margin-left: 8px;
+}
+.crusser-form{
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.Horizontal-line-end {
+  width: 47.5%;
+  height: 2px;
+  background-color: rgb(128, 124, 124);
+  margin-top: 3%;
+  margin-left: 38px;
+}
+.fourth-element{
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.help-ancher {
+  margin-left: 40px;
+  margin-top: 10px;
+  font-size: small;
+}
+.image{
+  padding: 5px 15px;
+  border-radius: 3px;
+  box-sizing: content-box;
+}
+.custom-btn {
+  border: 2px solid rgb(43, 43, 140);
+  border-radius: 3px;
+  padding: 5px 15px;
+  color: rgb(43, 43, 140);
+  font-size: small;
+  background-color: transparent;
+}
+
+.custom-btn-upload-continue {
+  border: 2px solid rgb(43, 43, 140);
+  border-radius: 3px;
+  background-color: rgb(43, 43, 140);
+  padding: 5px 15px;
+  color: white;
+  font-size: small;
+  margin-left: 20px;
+}
+.uploading-progress {
+  padding: 5%;
+  
+  margin-top: 10px;
+  margin-left: 40px;
+}
+.progress-width {
+  width: 100%;
+}
+.progress-bar {
+  border-radius: 1px;
+  height: 10px;
+  border-color: black;
+  border-width: 2px;
+  background-color: aliceblue;
+}
+.red-color {
+  color: red;
+  scale: 1.5;
+}
+.green-color {
+  color: green;
+  scale: 1.5;
+}
+.visible {
+  visibility: visible;
+}
+.invisible {
+  visibility: hidden;
 }
